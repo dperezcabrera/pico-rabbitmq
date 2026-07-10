@@ -58,15 +58,25 @@ class RabbitRegistrar:
 
     @cleanup
     def stop(self) -> None:
-        if self._loop is None:
+        # Atomic ownership: concurrent stops (ASGI lifespan + app code both
+        # calling container.shutdown()) must not interleave — the loser sees
+        # None and returns. pico-ioc >= 2.3.3 also guards at container level.
+        with self._lock:
+            loop, thread = self._loop, self._thread
+            self._loop = None
+            self._thread = None
+        if loop is None:
             return
         if self._connection is not None:
-            self._run(self._connection.close())
-        self._loop.call_soon_threadsafe(self._loop.stop)
-        self._thread.join(timeout=5)
-        self._loop.close()
-        self._loop = None
-        self._thread = None
+            try:
+                asyncio.run_coroutine_threadsafe(self._connection.close(), loop).result(
+                    timeout=self._settings.publish_timeout_seconds
+                )
+            except TimeoutError:
+                logger.warning("rabbitmq shutdown timed out; forcing loop stop")
+        loop.call_soon_threadsafe(loop.stop)
+        thread.join(timeout=5)
+        loop.close()
         self._started.clear()
 
     def _ensure_loop(self) -> None:

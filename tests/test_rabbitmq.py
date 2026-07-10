@@ -131,3 +131,16 @@ def test_publisher_with_custom_init(make_container, broker):
     container = make_container()
     instance = Custom(container.get(RabbitRegistrar))
     assert instance.ready is True
+
+
+def test_concurrent_stop_is_safe(make_container, broker):
+    import threading
+
+    container = make_container(sys.modules[__name__])
+    registrar = container.get(RabbitRegistrar)
+    threads = [threading.Thread(target=registrar.stop) for _ in range(4)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    registrar.stop()
