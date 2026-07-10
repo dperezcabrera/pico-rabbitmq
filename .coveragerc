@@ -1,0 +1,18 @@
+[run]
+branch = True
+source =
+    pico_rabbitmq
+omit =
+    */_version.py
+
+[paths]
+pico_rabbitmq =
+    src/pico_rabbitmq
+    .tox/*/lib/*/site-packages/pico_rabbitmq
+    .tox/*/site-packages/pico_rabbitmq
+    */site-packages/pico_rabbitmq
+
+[report]
+show_missing = True
+omit =
+    */_version.py
