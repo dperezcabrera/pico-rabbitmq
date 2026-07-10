@@ -1,0 +1,22 @@
+# pico-rabbitmq
+
+> RabbitMQ pub-sub for the Pico ecosystem over aio-pika
+
+## Docs
+
+- [Home](https://dperezcabrera.github.io/pico-rabbitmq/)
+- [Getting Started](https://dperezcabrera.github.io/pico-rabbitmq/getting-started/)
+- [Architecture](https://dperezcabrera.github.io/pico-rabbitmq/architecture/)
+- [index](https://dperezcabrera.github.io/pico-rabbitmq/reference/)
+- [API](https://dperezcabrera.github.io/pico-rabbitmq/reference/api/)
+- [AI Coding Skills](https://dperezcabrera.github.io/pico-rabbitmq/skills/)
+- [FAQ](https://dperezcabrera.github.io/pico-rabbitmq/faq/)
+- [Troubleshooting](https://dperezcabrera.github.io/pico-rabbitmq/troubleshooting/)
+- [Changelog](https://dperezcabrera.github.io/pico-rabbitmq/CHANGELOG/)
+
+## For agents
+
+- [Full docs in one file](https://dperezcabrera.github.io/pico-rabbitmq/llms-full.txt)
+- [AGENTS.md (conventions and boundaries)](https://raw.githubusercontent.com/dperezcabrera/pico-rabbitmq/main/AGENTS.md)
+- [Flagship use case (whole ecosystem wired)](https://dperezcabrera.github.io/pico-boot/flagship/)
+- [PyPI](https://pypi.org/project/pico-rabbitmq/)
