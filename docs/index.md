@@ -27,3 +27,5 @@ class Events:
 ```
 
 No wiring: the module connects at startup, declares what it needs, dispatches JSON bodies to your methods and closes with the container.
+
+**See it in context**: the [flagship use case](https://dperezcabrera.github.io/pico-boot/flagship/) wires this module into a full order platform together with the rest of the ecosystem.
