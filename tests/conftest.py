@@ -8,7 +8,6 @@ import asyncio
 import json
 
 import pytest
-from pico_ioc import DictSource, configuration, init
 
 import pico_rabbitmq.registrar as registrar_module
 
@@ -130,11 +129,6 @@ class FakeAioPika:
             self.content_type = content_type
 
 
-@pytest.fixture(autouse=True)
-def isolate_from_installed_plugins(monkeypatch):
-    monkeypatch.setenv("PICO_BOOT_AUTO_PLUGINS", "false")
-
-
 @pytest.fixture
 def broker(monkeypatch):
     fake = FakeBroker()
@@ -156,18 +150,15 @@ def deliver(broker):
 
 
 @pytest.fixture
-def make_container(broker):
-    created = []
+def make_container(make_container, broker):
+    """Extends the plugin fixture: deliver() needs the registrar loop on the fake broker."""
+    plugin_make = make_container
 
     def _make(*modules, config=None):
-        cfg = configuration(DictSource(config or {}))
-        container = init(modules=["pico_rabbitmq", *modules], config=cfg)
-        created.append(container)
+        container = plugin_make(*modules, config=config)
         from pico_rabbitmq import RabbitRegistrar
 
         broker.loop = container.get(RabbitRegistrar)._loop
         return container
 
-    yield _make
-    for c in reversed(created):
-        c.shutdown()
+    return _make
