@@ -1,0 +1,36 @@
+# pico-rabbitmq
+
+> RabbitMQ pub-sub for the Pico ecosystem over aio-pika
+
+Install: `pip install pico-rabbitmq`. Import surface: `from pico_rabbitmq import ...`.
+
+## Usage
+
+```python
+from pico_ioc import component
+from pico_rabbitmq import consumer
+
+@component
+class OrderProjections:
+    @consumer("orders-projection", exchange="events", routing_key="orders.*")
+    async def on_order_event(self, message: dict):
+        ...
+```
+
+## Public API
+
+- `class RabbitSettings` — ``enabled: false`` disables consumers and publishers entirely.
+- `consumer(queue: str, *, exchange: str='', routing_key: str='', exchange_type: str='topic')` — Subscribe a component method to ``queue``.
+- `publish(*, exchange: str='', routing_key: str)` — Generate a publishing implementation for a stub method.
+- `publisher(cls)` — Turn a class of ``@publish`` stubs into an injectable component.
+- `class RabbitRegistrar`
+
+## Docs
+
+- docs/CHANGELOG.md
+- docs/architecture.md
+- docs/faq.md
+- docs/getting-started.md
+- docs/reference/ (2 pages)
+- docs/skills.md
+- docs/troubleshooting.md
