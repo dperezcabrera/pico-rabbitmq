@@ -3,8 +3,8 @@
 ## Prerequisites
 
 - Python >= 3.11 (tested on 3.11, 3.12, 3.13 and 3.14)
-- pico-ioc >= 2.2.0 (pico-boot recommended for auto-discovery)
-- aio-pika >= 9 (installed automatically)
+- pico-ioc >= 2.3.3 (pico-boot recommended for auto-discovery)
+- aio-pika >= 9.0.5 (installed automatically)
 - A reachable RabbitMQ broker
 
 ## Install
